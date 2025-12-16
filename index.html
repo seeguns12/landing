@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .nav { background: #333; padding: 10px; text-align: center; }
+        .nav a { color: white; text-decoration: none; margin: 0 20px; padding: 10px 20px; background: #555; border-radius: 5px; }
+        .nav a:hover { background: #777; }
+        iframe { width: 100%; height: calc(100vh - 60px); border: none; }
+        .home { padding: 50px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="/">Home</a>
+        <a href="/1">Durbarinn</a>
+        <a href="/2">Eventiz</a>
+    </div>
+    
+    <div id="content">
+        <div class="home">
+            <h1>Selamat Datang</h1>
+            <p>Pilih salah satu template di atas untuk melihat preview</p>
+        </div>
+    </div>
+
+    <script>
+        function loadPage() {
+            const path = window.location.pathname;
+            const content = document.getElementById('content');
+            
+            if (path === '/1') {
+                content.innerHTML = '<iframe src="https://htmldesigntemplates.com/html/durbarinn/index.html"></iframe>';
+            } else if (path === '/2') {
+                content.innerHTML = '<iframe src="https://htmldesigntemplates.com/html/eventiz/index.html"></iframe>';
+            } else {
+                content.innerHTML = '<div class="home"><h1>Selamat Datang</h1><p>Pilih salah satu template di atas untuk melihat preview</p></div>';
+            }
+        }
+
+        window.addEventListener('popstate', loadPage);
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A' && e.target.href.startsWith(window.location.origin)) {
+                e.preventDefault();
+                history.pushState(null, '', e.target.href);
+                loadPage();
+            }
+        });
+
+        loadPage();
+    </script>
+</body>
+</html>
